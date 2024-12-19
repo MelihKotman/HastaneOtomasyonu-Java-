@@ -13,6 +13,12 @@ public class YardimMesaji {
 		case "Basarili":
 			mesaj = "İşleminiz Başarılı!";
 			break;
+		case "Basarisiz":
+			mesaj = "İşleminiz Başarısız!";
+			break;
+		case "tarihsec":
+			mesaj = "Lütfen bir tarih seçiniz!";
+			break;
 		default:
 			mesaj = str;
 			

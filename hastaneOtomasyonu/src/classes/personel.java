@@ -56,12 +56,7 @@ public class personel extends Kullanici {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if(gerceklestiMi) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return gerceklestiMi;
 	}
 	public boolean cikarDoktor(int id) {
 		String query = "DELETE FROM user WHERE id = ?";
@@ -108,6 +103,43 @@ public class personel extends Kullanici {
 			return false;
 		}
 		
+	}
+	public boolean ekleCalisan(int id,int id_klinik) {
+		String query = "INSERT INTO calisan " + "(calisanID,clinicID) VALUES" + "(?,?)";
+		boolean gerceklestiMi = false;
+		int sayac = 0;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM calisan WHERE clinicID = "+id_klinik + " AND calisanID = "+id);
+			while (rs.next()) {
+				sayac++;
+			}
+			if(sayac == 0) {
+			pst = con.prepareStatement(query);
+			pst.setInt(1, id);
+			pst.setInt(2, id_klinik);
+			pst.executeUpdate();
+			}
+			gerceklestiMi = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return gerceklestiMi;
+	}
+	public ArrayList<Kullanici> getClinicDoctorList(int clinic_id) throws SQLException {
+		ArrayList<Kullanici> liste = new ArrayList<Kullanici>();
+		Kullanici obje;
+		try {
+		st = con.createStatement();
+		rs = st.executeQuery("SELECT u.id,u.TCKimlik,u.Ad,u.Soyad,u.Password,u.KullaniciTipi FROM calisan c LEFT JOIN user u ON c.calisanID = u.id WHERE clinicID = " + clinic_id);
+			while(rs.next()) {
+				obje = new Kullanici(rs.getInt("u.id"),rs.getString("u.TCKimlik"),rs.getString("u.Ad"),rs.getString("u.Soyad"),rs.getString("u.Password"),rs.getString("u.KullaniciTipi"));
+				liste.add(obje);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return liste;
 	}
 }
 

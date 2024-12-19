@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import baglanti.YardimMesaji;
+import classes.doktor;
+import classes.hasta;
 import classes.personel;
 
 import javax.swing.JLabel;
@@ -16,6 +18,7 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -43,6 +46,7 @@ public class girisEkrani extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					girisEkrani frame = new girisEkrani();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -104,15 +108,55 @@ public class girisEkrani extends JFrame {
 		girishasta_panel.add(sifre_hasta);
 		
 		JButton girisButon = new JButton("Giriş Yap");
+		girisButon.setBorderPainted(false);
+		girisButon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textTCHasta.getText().length() == 0 || passHasta.getText().length() == 0) {
+					YardimMesaji.gosterMesaj("tumdoldur");
+				}
+				else{ 
+					boolean controlHasta = true;
+					try {
+						Connection cone = conH.conDB();
+						Statement st = cone.createStatement();
+						ResultSet rs = st.executeQuery("SELECT * FROM user");
+						while(rs.next()) {
+							if(textTCHasta.getText().equals(rs.getString("TCKimlik")) && passHasta.getText().equals(rs.getString("Password"))) {
+								hasta Hasta = new hasta();
+								Hasta.setId(rs.getInt("id"));
+								Hasta.setTC_kim(rs.getString("TCKimlik"));
+								Hasta.setAd(rs.getString("Ad"));
+								Hasta.setSoyad(rs.getString("Soyad"));
+								Hasta.setParola(rs.getString("Password"));
+								Hasta.setType(rs.getString("KullaniciTipi"));
+								System.out.println(Hasta.getAd() + Hasta.getSoyad());
+								hastaEkrani hGUI = new hastaEkrani(); //Duzelitecek...
+								hGUI.setVisible(true);
+								dispose();
+							}
+						}
+					}catch(SQLException e1) {
+						e1.printStackTrace();
+					}
+					if(controlHasta) {
+						YardimMesaji.gosterMesaj("Böyle bir hasta bulunamadı. Lütfen tekrar kayıt olunuz.");
+					}
+				}
+			}
+		});
 		girisButon.setBackground(new Color(255, 111, 111));
 		girisButon.setBounds(40, 150, 116, 44);
 		girishasta_panel.add(girisButon);
 		
 		
 		JButton KaydolButton = new JButton("Kayıt Ol");
+		KaydolButton.setBorderPainted(false);
 		KaydolButton.setBackground(new Color(81, 255, 190));
 		KaydolButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				kayitEkrani kGUI = new kayitEkrani();
+				kGUI.setVisible(true);
+				dispose();
 			}
 		});
 		KaydolButton.setBounds(230, 150, 116, 44);
@@ -128,6 +172,7 @@ public class girisEkrani extends JFrame {
 		girisdoktor_panel.setLayout(null);
 		
 		JButton girisButonDoktor = new JButton("Giriş Yap");
+		girisButonDoktor.setBorderPainted(false);
 		girisButonDoktor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(tcDoktor.getText().length() == 0 || passDoktor.getText().length() == 0) {
@@ -138,21 +183,41 @@ public class girisEkrani extends JFrame {
 						Connection cone = conH.conDB();
 						Statement st = cone.createStatement();
 						ResultSet rs = st.executeQuery("SELECT * FROM user");
+						 boolean userFound = false;
 						while(rs.next()) {
 							if(tcDoktor.getText().equals(rs.getString("TCKimlik")) && passDoktor.getText().equals(rs.getString("Password"))) {
-								personel Persona = new personel();
-								Persona.setId(rs.getInt("id"));
-								Persona.setTC_kim(rs.getString("TCKimlik"));
-								Persona.setAd(rs.getString("Ad"));
-								Persona.setSoyad(rs.getString("Soyad"));
-								Persona.setParola(rs.getString("Password"));
-								Persona.setType(rs.getString("KullaniciTipi"));
-								System.out.println(Persona.getAd() + Persona.getSoyad());
-								personelEkrani pGUI = new personelEkrani(Persona);
-								pGUI.setVisible(true);
-								dispose();
+								userFound = true;
+								if(rs.getString("KullaniciTipi").equals("personel")){
+									personel Persona = new personel();
+									Persona.setId(rs.getInt("id"));
+									Persona.setTC_kim(rs.getString("TCKimlik"));
+									Persona.setAd(rs.getString("Ad"));
+									Persona.setSoyad(rs.getString("Soyad"));
+									Persona.setParola(rs.getString("Password"));
+									Persona.setType(rs.getString("KullaniciTipi"));
+									System.out.println(Persona.getAd() + Persona.getSoyad());
+									personelEkrani pGUI = new personelEkrani(Persona);
+									pGUI.setVisible(true);
+									dispose();
+								}else if(rs.getString("KullaniciTipi").equals("doktor")){
+									doktor Doktor = new doktor();
+                                    Doktor.setId(rs.getInt("id"));
+                                    Doktor.setTC_kim(rs.getString("TCKimlik"));
+                                    Doktor.setAd(rs.getString("Ad"));
+                                    Doktor.setSoyad(rs.getString("Soyad"));
+                                    Doktor.setParola(rs.getString("Password"));
+                                    Doktor.setType(rs.getString("KullaniciTipi"));
+                                    System.out.println(Doktor.getAd() + Doktor.getSoyad());
+                                    doktorEkrani dGUI = new doktorEkrani(Doktor);
+                                    dGUI.setVisible(true);
+                                    dispose();
+								}
+								break;
 							}
 						}
+						if (!userFound) {
+		                    YardimMesaji.gosterMesaj("Böyle bir kullanıcı bulunamadı. Lütfen tekrar kontrol edin.");
+		                }
 					}catch(SQLException e1) {
 						e1.printStackTrace();
 					}

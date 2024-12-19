@@ -8,7 +8,7 @@ public class Kullanici { //Superclass olarak kullanici var ve bu doktor personel
 	 String parola;
 	 String type;
 	 DbConnection conK = new DbConnection();
-	public Kullanici(int id, String tC_kim,String ad, String soyad,   String parola, String type) {
+	public Kullanici(int id, String tC_kim,String ad, String soyad,String parola, String type) {
 		this.ad = ad;
 		this.soyad = soyad;
 		this.id = id;

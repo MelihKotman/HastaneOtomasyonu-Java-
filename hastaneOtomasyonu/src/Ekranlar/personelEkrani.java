@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -13,33 +14,51 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import classes.personel;
+import classes.poliklinik;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Point;
 import java.sql.SQLException;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
-import baglanti.DbConnection;
+
+import baglanti.Item;
 import baglanti.YardimMesaji;
+import javax.swing.JComboBox;
 public class personelEkrani extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	static poliklinik Clinic = new poliklinik();
 	static personel Personel = new personel(); //mainden bagimsiz bir nesne olacagi icin eger bagimli olursa sıkıntı cikarabilir
 	private JTextField textyeniDocAd;
 	private JTextField textyeniDocSoy;
 	private JTextField textyeniDocPass;
 	private JTextField textyeniDocTc;
 	private JTextField textyeniDocID;
+	private DefaultTableModel clinicListele = null;
 	private DefaultTableModel doctorListele = null;
+	private Object[] clinicDatala = null;
 	private Object[] doctorDatala = null;
 	private JTable Doktorlistesi;
+	private JTable poliklinikListesi;
+	private JTextField textPolCli;
+	private JPopupMenu clinicMenu;
+	private JTable table_calisan;
 	/**
 	 * Launch the application.
 	 */
@@ -47,6 +66,7 @@ public class personelEkrani extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					personelEkrani frame = new personelEkrani(Personel);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -81,6 +101,24 @@ public class personelEkrani extends JFrame {
 			doctorListele.addRow(doctorDatala);
 		}
 		
+		clinicListele = new DefaultTableModel();
+		Object[] colClinic = new Object[2];
+		colClinic[0] = "Poliklinik Numarası";
+		colClinic[1] = "Poliklinik Adı";
+		clinicListele.setColumnIdentifiers(colClinic);
+		clinicDatala = new Object[2];
+		for(int i = 0; i < Clinic.getPoliList().size(); i++) {
+			clinicDatala[0] = Clinic.getPoliList().get(i).getId_klinik();
+			clinicDatala[1] = Clinic.getPoliList().get(i).getKlinik_ad();
+			clinicListele.addRow(clinicDatala);
+		}
+		
+		DefaultTableModel calisanListele = new DefaultTableModel();
+		Object[] colCalisan = new Object[2];
+		colCalisan[0] = "Çalışan ID";
+		colCalisan[1] = "Ad Soyad";
+		calisanListele.setColumnIdentifiers(colCalisan);
+		Object[] calisanDatala = new Object[2];
 		
 		setTitle("e-Hastane Uygulaması");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,13 +131,14 @@ public class personelEkrani extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton cikisbutonu = new JButton("Çıkış Yap");
+		cikisbutonu.setBorderPainted(false);
 		cikisbutonu.setBounds(686, 11, 138, 33);
 		cikisbutonu.setBackground(new Color(255, 0, 0));
 		cikisbutonu.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		contentPane.add(cikisbutonu);
 		
 		JLabel personeletiket = new JLabel("Hoş Geldiniz " + Personel.getAd() + "" + Personel.getSoyad());
-		personeletiket.setBounds(22, 11, 225, 39);
+		personeletiket.setBounds(23, 11, 225, 39);
 		personeletiket.setFont(new Font("Verdana Pro Cond Semibold", Font.ITALIC, 13));
 		contentPane.add(personeletiket);
 		
@@ -118,6 +157,7 @@ public class personelEkrani extends JFrame {
 		doktoryonetim.add(yeniDokAd);
 		
 		textyeniDocAd = new JTextField();
+		textyeniDocAd.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
 		textyeniDocAd.setBounds(616, 38, 146, 20);
 		doktoryonetim.add(textyeniDocAd);
 		textyeniDocAd.setColumns(10);
@@ -128,6 +168,7 @@ public class personelEkrani extends JFrame {
 		doktoryonetim.add(yeniDokSoy);
 		
 		textyeniDocSoy = new JTextField();
+		textyeniDocSoy.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
 		textyeniDocSoy.setBounds(616, 86, 146, 20);
 		doktoryonetim.add(textyeniDocSoy);
 		textyeniDocSoy.setColumns(10);
@@ -138,6 +179,7 @@ public class personelEkrani extends JFrame {
 		doktoryonetim.add(yeniDokPass);
 		
 		textyeniDocPass = new JTextField();
+		textyeniDocPass.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
 		textyeniDocPass.setBounds(616, 142, 146, 20);
 		doktoryonetim.add(textyeniDocPass);
 		textyeniDocPass.setColumns(10);
@@ -148,11 +190,13 @@ public class personelEkrani extends JFrame {
 		doktoryonetim.add(yeniDokTc);
 		
 		textyeniDocTc = new JTextField();
+		textyeniDocTc.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
 		textyeniDocTc.setBounds(616, 198, 146, 20);
 		doktoryonetim.add(textyeniDocTc);
 		textyeniDocTc.setColumns(10);
 		
 		JButton KaydetButton = new JButton("Kaydet");
+		KaydetButton.setBorderPainted(false);
 		KaydetButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textyeniDocAd.getText().length() == 0 || textyeniDocSoy.getText().length() == 0 || textyeniDocPass.getText().length() == 0 || textyeniDocTc.getText().length() == 0) {
@@ -184,11 +228,13 @@ public class personelEkrani extends JFrame {
 		doktoryonetim.add(DokSilID);
 		
 		textyeniDocID = new JTextField();
+		textyeniDocID.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
 		textyeniDocID.setBounds(616, 288, 146, 20);
 		doktoryonetim.add(textyeniDocID);
 		textyeniDocID.setColumns(10);
 		
 		JButton SilButton = new JButton("Sil");
+		SilButton.setBorderPainted(false);
 		SilButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		if(textyeniDocID.getText().length() == 0) {
@@ -259,9 +305,208 @@ public class personelEkrani extends JFrame {
 					}
 			}
 		});
-		Doktorlistesi.setBackground(new Color(227, 250, 251));
+		Doktorlistesi.setBackground(new Color(255, 255, 255));
 		Doktorlistesi.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		scrollPane_liste.setViewportView(Doktorlistesi);
+		
+		JPanel poliyonetim = new JPanel();
+		poliyonetim.setBackground(new Color(255, 255, 255));
+		anaPane.addTab("Poliklinik Yönetimi", null, poliyonetim, null);
+		poliyonetim.setLayout(null);
+		
+		JScrollPane poliklinik_pane = new JScrollPane();
+		poliklinik_pane.setBounds(10, 11, 307, 353);
+		poliyonetim.add(poliklinik_pane);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(598, 11, 189, 353);
+		poliyonetim.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblPoliklinikAd = new JLabel("Poliklinik Adı:");
+		lblPoliklinikAd.setBounds(52, 11, 80, 17);
+		panel.add(lblPoliklinikAd);
+		lblPoliklinikAd.setFont(new Font("Verdana Pro Cond Semibold", Font.BOLD, 13));
+		
+		textPolCli = new JTextField();
+		textPolCli.setBounds(21, 33, 146, 20);
+		panel.add(textPolCli);
+		textPolCli.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
+		textPolCli.setColumns(10);
+		
+		clinicMenu = new JPopupMenu();
+		JMenuItem updateMenu = new JMenuItem("Değiştir");
+		JMenuItem deleteMenu = new JMenuItem("Sil");
+		clinicMenu.add(updateMenu);
+		clinicMenu.add(deleteMenu);
+		updateMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int seciliID3 = Integer.parseInt(poliklinikListesi.getValueAt(poliklinikListesi.getSelectedRow(), 0).toString());
+				poliklinik seciliClinic = Clinic.getFetch(seciliID3);
+				DegistirKlinikMenu degistir = new DegistirKlinikMenu(seciliClinic);
+				degistir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				degistir.setVisible(true);
+				degistir.addWindowListener(new WindowAdapter(){
+					public void WindowClosed(WindowEvent e) {
+					try {
+						guncelKlinikListe();
+					}
+					catch(SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+		}	
+	});
+	deleteMenu.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			int seciliID4 = Integer.parseInt(poliklinikListesi.getValueAt(poliklinikListesi.getSelectedRow(), 0).toString());
+			try {
+				boolean controlet3 = Clinic.cikarClinic(seciliID4);
+				if (controlet3) {
+					YardimMesaji.gosterMesaj("Basarili");
+					guncelKlinikListe();
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+	});
+		poliklinikListesi = new JTable(clinicListele);
+		poliklinikListesi.setComponentPopupMenu(clinicMenu);
+		poliklinikListesi.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				Point point = e.getPoint();
+				int secilisira = poliklinikListesi.rowAtPoint(point);
+				poliklinikListesi.setRowSelectionInterval(secilisira, secilisira);
+			}
+		});	
+		poliklinikListesi.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
+		poliklinik_pane.setViewportView(poliklinikListesi);
+		
+		JButton ButonClinic = new JButton("Kaydet");
+		ButonClinic.setBorderPainted(false);
+		ButonClinic.setBounds(21, 64, 146, 23);
+		panel.add(ButonClinic);
+		ButonClinic.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textPolCli.getText().length() == 0) {
+					YardimMesaji.gosterMesaj("tumdoldur");
+				}
+				else {
+					try {
+						if(Clinic.ekleClinic(textPolCli.getText())) {
+							YardimMesaji.gosterMesaj("Basarili");
+							textPolCli.setText(null);
+							guncelKlinikListe();
+						}
+					}catch(SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		ButonClinic.setBackground(new Color(7, 164, 248));
+		
+		JComboBox secDoktor = new JComboBox();
+		for (int i = 0; i < Personel.getDoctorList().size(); i++) {
+			personel p = new personel();
+			secDoktor.addItem(new Item(p.getDoctorList().get(i).getId(),p.getDoctorList().get(i).getAd()));
+		}
+		secDoktor.setBounds(21, 151, 146, 23);
+		panel.add(secDoktor);
+		
+		JButton ButonWorker = new JButton("Ekle");
+		ButonWorker.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int selRow = poliklinikListesi.getSelectedRow();
+					int selDoc = ((Item)secDoktor.getSelectedItem()).getKey();
+					if(selRow >= 0) {
+						String selClinic = poliklinikListesi.getModel().getValueAt(selRow, 0).toString();
+						int selClinicID = Integer.parseInt(selClinic);
+						Item itemDoc = (Item)secDoktor.getSelectedItem();
+						boolean controlet4 = Personel.ekleCalisan(itemDoc.getKey(),selClinicID);
+						try {
+							if(controlet4){
+								YardimMesaji.gosterMesaj("Basarili");
+		                        DefaultTableModel calisanModel = (DefaultTableModel) table_calisan.getModel();
+		                        calisanModel.setRowCount(0);
+		        
+									for(int i = 0; i < Personel.getClinicDoctorList(selClinicID).size(); i++) {
+									    calisanDatala[0] = Personel.getClinicDoctorList(selClinicID).get(i).getId();
+									    calisanDatala[1] = Personel.getClinicDoctorList(selClinicID).get(i).getAd() + " " + Personel.getClinicDoctorList(selClinicID).get(i).getSoyad();
+									    calisanModel.addRow(calisanDatala);
+									}
+								}
+							
+							else {
+								YardimMesaji.gosterMesaj("Basarisiz");
+							}
+						}
+					 catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						}
+					else {
+							YardimMesaji.gosterMesaj("Lutfen bir poliklinik seçiniz!");
+						}
+					}
+				});
+		ButonWorker.setBorderPainted(false);
+		ButonWorker.setBackground(new Color(7, 164, 248));
+		ButonWorker.setBounds(21, 185, 146, 23);
+		panel.add(ButonWorker);
+		
+		JButton butonSecCLi = new JButton("Seç");
+		butonSecCLi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selRow = poliklinikListesi.getSelectedRow();
+				if(selRow >= 0) {
+                    String selClinic = poliklinikListesi.getModel().getValueAt(selRow, 0).toString();
+                    int selClinicID = Integer.parseInt(selClinic);
+                    DefaultTableModel temizleModel = (DefaultTableModel) table_calisan.getModel();
+                    temizleModel.setRowCount(0);
+                    try {
+                        DefaultTableModel calisanModel = (DefaultTableModel) table_calisan.getModel();
+                        calisanModel.setRowCount(0);
+                        for(int i = 0; i < Personel.getClinicDoctorList(selClinicID).size(); i++) {
+                            calisanDatala[0] = Personel.getClinicDoctorList(selClinicID).get(i).getId();
+                            calisanDatala[1] = Personel.getClinicDoctorList(selClinicID).get(i).getAd() + " " + Personel.getClinicDoctorList(selClinicID).get(i).getSoyad();
+                            calisanModel.addRow(calisanDatala);
+                        }
+                        table_calisan.setModel(calisanListele);
+                    }catch(SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                    table_calisan.setModel(calisanListele);
+                }
+                else {
+                    YardimMesaji.gosterMesaj("Lutfen bir poliklinik seçiniz!");
+			}
+			}
+	});
+		butonSecCLi.setBorderPainted(false);
+		butonSecCLi.setBackground(new Color(7, 164, 248));
+		butonSecCLi.setBounds(21, 297, 146, 23);
+		panel.add(butonSecCLi);
+		
+		JLabel lblPoliklinikAd_1 = new JLabel("Poliklinik Adı:");
+		lblPoliklinikAd_1.setFont(new Font("Verdana Pro Cond Semibold", Font.BOLD, 13));
+		lblPoliklinikAd_1.setBounds(52, 269, 80, 17);
+		panel.add(lblPoliklinikAd_1);
+		
+		JLabel lblDoktorAd = new JLabel("Doktor Adı:");
+		lblDoktorAd.setFont(new Font("Verdana Pro Cond Semibold", Font.BOLD, 13));
+		lblDoktorAd.setBounds(52, 123, 80, 17);
+		panel.add(lblDoktorAd);
+		
+		JScrollPane calisan_pane = new JScrollPane();
+		calisan_pane.setBounds(327, 11, 260, 353);
+		poliyonetim.add(calisan_pane);
+		
+		table_calisan = new JTable();
+		calisan_pane.setViewportView(table_calisan);
 		}
 		
 	public void guncelDoktorListe() throws SQLException {
@@ -275,6 +520,16 @@ public class personelEkrani extends JFrame {
 			doctorDatala[4] = Personel.getDoctorList().get(i).getParola();
 			doctorListele.addRow(doctorDatala);
 		}
+	}
+	public void guncelKlinikListe()throws SQLException{
+		DefaultTableModel temizleModel = (DefaultTableModel) poliklinikListesi.getModel();
+		temizleModel.setRowCount(0);
+		for(int i = 0; i < Clinic.getPoliList().size(); i++) {
+			clinicDatala[0] = Clinic.getPoliList().get(i).getId_klinik();
+			clinicDatala[1] = Clinic.getPoliList().get(i).getKlinik_ad();
+			clinicListele.addRow(clinicDatala);
+		}
+		
 	}
 }
 
