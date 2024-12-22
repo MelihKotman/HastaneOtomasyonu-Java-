@@ -145,7 +145,7 @@ public class personelEkrani extends JFrame {
 		cikisbutonu.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		contentPane.add(cikisbutonu);
 		
-		JLabel personeletiket = new JLabel("Hoş Geldiniz " + Personel.getAd() + "" + Personel.getSoyad());
+		JLabel personeletiket = new JLabel("Hoş Geldiniz, " + Personel.getAd() + " " + Personel.getSoyad());
 		personeletiket.setBounds(23, 11, 255, 39);
 		personeletiket.setFont(new Font("Verdana Pro Cond Semibold", Font.ITALIC, 14));
 		contentPane.add(personeletiket);

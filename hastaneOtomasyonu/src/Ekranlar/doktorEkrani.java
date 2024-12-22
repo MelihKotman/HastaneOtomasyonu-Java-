@@ -108,7 +108,7 @@ public class doktorEkrani extends JFrame {
 		setContentPane(doctorPane);
 		doctorPane.setLayout(null);
 		
-		JLabel personeletiket = new JLabel("Hoş Geldiniz " + Doktor.getAd() + " " + Doktor.getSoyad());
+		JLabel personeletiket = new JLabel("Hoş Geldiniz, " + Doktor.getAd() + " " + Doktor.getSoyad());
 		personeletiket.setForeground(new Color(45, 75, 86));
 		personeletiket.setBounds(23, 11, 227, 33);
 		personeletiket.setFont(new Font("Verdana Pro Cond Semibold", Font.ITALIC, 14));
