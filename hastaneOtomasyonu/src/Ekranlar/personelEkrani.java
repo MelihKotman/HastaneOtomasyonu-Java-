@@ -131,6 +131,13 @@ public class personelEkrani extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton cikisbutonu = new JButton("Çıkış Yap");
+		cikisbutonu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				girisEkrani login = new girisEkrani();
+				login.setVisible(true);
+				dispose();
+			}
+		});
 		cikisbutonu.setBorderPainted(false);
 		cikisbutonu.setBounds(686, 11, 138, 33);
 		cikisbutonu.setBackground(new Color(255, 0, 0));

@@ -63,6 +63,7 @@ public class doktor extends Kullanici {
 			pst.executeUpdate();
 			}
 			key = 1;
+			
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

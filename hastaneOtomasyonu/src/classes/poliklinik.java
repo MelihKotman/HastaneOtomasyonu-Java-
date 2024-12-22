@@ -117,4 +117,20 @@ public class poliklinik {
 		}
 		return p;
 	}
+	public ArrayList<Kullanici> getClinicDoctorList(int clinic_id) throws SQLException {
+		ArrayList<Kullanici> liste = new ArrayList<Kullanici>();
+		Kullanici obje;
+		try {
+		Connection con = conC.conDB();
+		st = con.createStatement();
+		rs = st.executeQuery("SELECT u.id,u.TCKimlik,u.Ad,u.Soyad,u.Password,u.KullaniciTipi FROM calisan c LEFT JOIN user u ON c.calisanID = u.id WHERE clinicID = " + clinic_id);
+			while(rs.next()) {
+				obje = new Kullanici(rs.getInt("u.id"),rs.getString("u.TCKimlik"),rs.getString("u.Ad"),rs.getString("u.Soyad"),rs.getString("u.Password"),rs.getString("u.KullaniciTipi"));
+				liste.add(obje);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return liste;
+	}
 }

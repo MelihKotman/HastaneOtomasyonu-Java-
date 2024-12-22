@@ -11,6 +11,7 @@ import com.toedter.calendar.JCalendar;
 
 import classes.Calsaat;
 import classes.doktor;
+import classes.randevu;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -42,6 +43,10 @@ public class doktorEkrani extends JFrame {
 	private JTable table_calsaat;
 	private DefaultTableModel calModel;
 	private Object[] calData = null;
+	private JTable Randevu_table;
+	private static randevu Ran = new randevu();
+	private DefaultTableModel ranModel;
+	private Object[] ranData = null;
 
 	/**
 	 * Launch the application.
@@ -67,18 +72,31 @@ public class doktorEkrani extends JFrame {
 	public doktorEkrani(doktor Doktor) throws SQLException {
 		
 		calModel = new DefaultTableModel();
-		Object[] calData = new Object[2];
-		calModel.addColumn("ID");
-		calModel.addColumn("Tarih");
-		calModel.setColumnIdentifiers(calData);
-		table_calsaat.setModel(calModel);
+		Object[] calCol = new Object[2];
+		calCol[0] = "ID";
+		calCol[1] = "Tarih";
+		calModel.setColumnIdentifiers(calCol);
 		calData = new Object[2];
 		for (int i = 0; i < Doktor.getCalSaatList(Doktor.getId()).size(); i++) {
 			calData[0] = Doktor.getCalSaatList(Doktor.getId()).get(i).getId();
 			calData[1] = Doktor.getCalSaatList(Doktor.getId()).get(i).getDate();
 			calModel.addRow(calData);
 		}
-		
+		ranModel = new DefaultTableModel();
+		Object[] ranCol = new Object[4];
+		ranCol[0] = "ID";
+		ranCol[1] = "Hasta Ad";
+		ranCol[2] = "Hasta Soyad";
+		ranCol[3] = "Tarih";
+		ranModel.setColumnIdentifiers(ranCol);
+		ranData = new Object[4];
+		for (int i = 0; i < Ran.getDocRanList(Doktor.getId()).size(); i++) {
+			ranData[0] = Ran.getDocRanList(Doktor.getId()).get(i).getId();
+			ranData[1] = Ran.getDocRanList(Doktor.getId()).get(i).getHastaAd();
+			ranData[2] = Ran.getDocRanList(Doktor.getId()).get(i).getHastaSoyad();
+			ranData[3] = Ran.getDocRanList(Doktor.getId()).get(i).getTarih();
+			ranModel.addRow(ranData);
+		}
 		
 		setTitle("e-Hastane Uygulaması");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,15 +109,22 @@ public class doktorEkrani extends JFrame {
 		doctorPane.setLayout(null);
 		
 		JLabel personeletiket = new JLabel("Hoş Geldiniz " + Doktor.getAd() + " " + Doktor.getSoyad());
-		personeletiket.setBounds(23, 11, 205, 33);
+		personeletiket.setBounds(23, 11, 227, 33);
 		personeletiket.setFont(new Font("Verdana Pro Cond Semibold", Font.ITALIC, 13));
 		doctorPane.add(personeletiket);
 		
 		JButton cikisbutonu = new JButton("Çıkış Yap");
+		cikisbutonu.setBounds(671, 12, 138, 33);
+		cikisbutonu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				girisEkrani login = new girisEkrani();
+				login.setVisible(true);
+				dispose();
+			}
+		});
 		cikisbutonu.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		cikisbutonu.setBorderPainted(false);
 		cikisbutonu.setBackground(Color.RED);
-		cikisbutonu.setBounds(671, 12, 138, 33);
 		doctorPane.add(cikisbutonu);
 		
 		JTabbedPane anaPane = new JTabbedPane(JTabbedPane.TOP);
@@ -167,6 +192,8 @@ public class doktorEkrani extends JFrame {
 		table_calsaat = new JTable(calModel);
 		w_scrollPane.setViewportView(table_calsaat);
 		
+
+		
 		JButton btnSil = new JButton("Sil");
 		btnSil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -196,6 +223,24 @@ public class doktorEkrani extends JFrame {
 		btnSil.setBackground(new Color(10, 139, 245));
 		btnSil.setBounds(664, 11, 123, 28);
 		WorHour.add(btnSil);
+		
+		JPanel RandevuPan = new JPanel();
+		anaPane.addTab("New tab", null, RandevuPan, null);
+		RandevuPan.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 50, 777, 314);
+		RandevuPan.add(scrollPane);
+		
+		Randevu_table = new JTable(ranModel);
+		scrollPane.setViewportView(Randevu_table);
+		
+		JButton btnSilRan = new JButton("Sil");
+		btnSilRan.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
+		btnSilRan.setBorderPainted(false);
+		btnSilRan.setBackground(new Color(10, 139, 245));
+		btnSilRan.setBounds(664, 11, 123, 28);
+		RandevuPan.add(btnSilRan);
 	}	
 		public void guncelSaat(doktor Doktor)throws SQLException{
 			DefaultTableModel temizleModel = (DefaultTableModel) table_calsaat.getModel();

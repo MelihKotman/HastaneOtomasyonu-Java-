@@ -39,6 +39,7 @@ public class girisEkrani extends JFrame {
 	private JPasswordField passHasta;
 	private JPasswordField passDoktor;
 	private DbConnection conH = new DbConnection();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -122,6 +123,7 @@ public class girisEkrani extends JFrame {
 						ResultSet rs = st.executeQuery("SELECT * FROM user");
 						while(rs.next()) {
 							if(textTCHasta.getText().equals(rs.getString("TCKimlik")) && passHasta.getText().equals(rs.getString("Password"))) {
+								if(rs.getString("KullaniciTipi").equals("hasta")) {
 								hasta Hasta = new hasta();
 								Hasta.setId(rs.getInt("id"));
 								Hasta.setTC_kim(rs.getString("TCKimlik"));
@@ -130,12 +132,14 @@ public class girisEkrani extends JFrame {
 								Hasta.setParola(rs.getString("Password"));
 								Hasta.setType(rs.getString("KullaniciTipi"));
 								System.out.println(Hasta.getAd() + Hasta.getSoyad());
-								hastaEkrani hGUI = new hastaEkrani(); //Duzelitecek...
+								hastaEkrani hGUI = new hastaEkrani(Hasta); 
 								hGUI.setVisible(true);
 								dispose();
+								controlHasta = false;
+									}
+								}
 							}
-						}
-					}catch(SQLException e1) {
+						}	catch(SQLException e1) {
 						e1.printStackTrace();
 					}
 					if(controlHasta) {

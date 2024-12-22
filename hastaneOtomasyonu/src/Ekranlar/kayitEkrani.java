@@ -5,18 +5,29 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import baglanti.YardimMesaji;
+import classes.hasta;
+
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import java.awt.Color;
+import javax.swing.JButton;
 
 public class kayitEkrani extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField textAd;
+	private JTextField textSoyad;
+	private JTextField textKimlik;
+	private JTextField texParola;
+	private hasta Hasta = new hasta();
 
 	/**
 	 * Launch the application.
@@ -25,6 +36,7 @@ public class kayitEkrani extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					kayitEkrani frame = new kayitEkrani();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -38,57 +50,103 @@ public class kayitEkrani extends JFrame {
 	 * Create the frame.
 	 */
 	public kayitEkrani() {
+		setTitle("e-Hastane Uygulaması");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 476);
+		setBounds(100, 100, 392, 460);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Yeni Kayıt için Lütfen Bilgileri Giriniz");
-		lblNewLabel.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
-		lblNewLabel.setBounds(104, 11, 220, 27);
+		lblNewLabel.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 14));
+		lblNewLabel.setBounds(76, 45, 239, 27);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Ad :");
-		lblNewLabel_1.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(10, 86, 61, 27);
-		contentPane.add(lblNewLabel_1);
+		JLabel adEtkiet = new JLabel("Ad :");
+		adEtkiet.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 14));
+		adEtkiet.setBounds(29, 83, 61, 27);
+		contentPane.add(adEtkiet);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Soyad :");
+		textAd = new JTextField();
+		textAd.setBounds(29, 110, 117, 27);
+		contentPane.add(textAd);
+		textAd.setColumns(10);
+		
+		JButton KaydolButton = new JButton("Kayıt Ol");
+		KaydolButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+              if(textAd.getText().length() == 0 || textSoyad.getText().length() == 0 || textKimlik.getText().length() == 0 || texParola.getText().length() == 0) {
+            	  YardimMesaji.gosterMesaj("tumdoldur");
+              }
+              else {
+            	  try {
+            	  boolean controlet6 = Hasta.register(textAd.getText(),textSoyad.getText(),textKimlik.getText(),texParola.getText());
+						if (controlet6) {
+							YardimMesaji.gosterMesaj("Basarili");
+							girisEkrani login = new girisEkrani();
+							login.setVisible(true);
+							dispose();
+						} else {
+							YardimMesaji.gosterMesaj("Basarisiz");
+						}
+            	  }
+					catch (Exception ex) {
+						ex.printStackTrace();
+					}
+              }
+			}
+		});
+		KaydolButton.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 15));
+		KaydolButton.setBorderPainted(false);
+		KaydolButton.setBackground(new Color(81, 255, 190));
+		KaydolButton.setBounds(49, 289, 286, 44);
+		contentPane.add(KaydolButton);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Soyad:");
 		lblNewLabel_1_1.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(10, 138, 61, 27);
+		lblNewLabel_1_1.setBounds(236, 83, 61, 27);
 		contentPane.add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("T.C. Kimlik Numarası  :");
+		textSoyad = new JTextField();
+		textSoyad.setColumns(10);
+		textSoyad.setBounds(236, 110, 117, 27);
+		contentPane.add(textSoyad);
+		
+		JLabel lblNewLabel_1_2 = new JLabel("T.C. Kimlik  Numarası :");
 		lblNewLabel_1_2.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 14));
-		lblNewLabel_1_2.setBounds(10, 199, 147, 27);
+		lblNewLabel_1_2.setBounds(29, 148, 164, 27);
 		contentPane.add(lblNewLabel_1_2);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("Şifre :");
-		lblNewLabel_1_3.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 14));
-		lblNewLabel_1_3.setBounds(10, 256, 61, 27);
-		contentPane.add(lblNewLabel_1_3);
+		textKimlik = new JTextField();
+		textKimlik.setColumns(10);
+		textKimlik.setBounds(29, 173, 324, 27);
+		contentPane.add(textKimlik);
 		
-		textField = new JTextField();
-		textField.setBounds(177, 91, 147, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		texParola = new JTextField();
+		texParola.setColumns(10);
+		texParola.setBounds(29, 238, 324, 27);
+		contentPane.add(texParola);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(177, 143, 147, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		JLabel lblNewLabel_1_2_1 = new JLabel("Şifre :");
+		lblNewLabel_1_2_1.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 14));
+		lblNewLabel_1_2_1.setBounds(29, 211, 164, 27);
+		contentPane.add(lblNewLabel_1_2_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(177, 204, 147, 20);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(177, 261, 147, 20);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
+		JButton btnGeriDn = new JButton("Geri Dön");
+		btnGeriDn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                girisEkrani login = new girisEkrani();
+                login.setVisible(true);
+                dispose();
+            }
+		});
+		btnGeriDn.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 15));
+		btnGeriDn.setBorderPainted(false);
+		btnGeriDn.setBackground(new Color(255, 0, 0));
+		btnGeriDn.setBounds(49, 344, 286, 44);
+		contentPane.add(btnGeriDn);
 	}
 }
