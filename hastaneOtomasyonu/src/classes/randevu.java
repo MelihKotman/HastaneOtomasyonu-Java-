@@ -34,54 +34,7 @@ public class randevu {
 		this.hastaSoyad = hastaSoyad;
 		this.tarih = tarih;
 	}
-	/*public ArrayList<randevu> getHastaRanList(int hastaID) throws SQLException {
-		ArrayList<randevu> liste3 = new ArrayList<randevu>();
-        randevu obje3;
-        Connection con = conR.conDB();
-        try {
-             st = con.createStatement();
-             rs = st.executeQuery("SELECT * FROM randevu WHERE hasta_id = "+ hastaID );
-			while(rs.next()) {
-				obje3 = new randevu();
-				obje3.setId(rs.getInt("id"));
-				obje3.setDoctor_id(rs.getInt("doctor_id"));
-				obje3.setDoktorAd(rs.getString("doktor_ad"));
-				obje3.setDoktorSoyad(rs.getString("doktor_soyad"));
-				obje3.setHasta_id(rs.getInt("hasta_id"));
-				obje3.setHastaAd(rs.getString("hasta_ad"));
-				obje3.setHastaSoyad(rs.getString("hasta_soyad"));
-				obje3.setTarih(rs.getString("tarih"));
-				liste3.add(obje3);
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return liste3;
-	}
-	public ArrayList<randevu> getDocRanList(int doctor_id) throws SQLException {
-		ArrayList<randevu> liste2 = new ArrayList<randevu>();
-		randevu obje4;
-		Connection con = conR.conDB();
-		try {
-		st = con.createStatement();
-		rs = st.executeQuery("SELECT * FROM randevu WHERE doktor_id = "+ doctor_id );
-			while(rs.next()) {
-				obje4 = new randevu();
-				obje4.setId(rs.getInt("id"));
-				obje4.setDoctor_id(rs.getInt("doctor_id"));
-				obje4.setDoktorAd(rs.getString("doktor_ad"));
-				obje4.setDoktorSoyad(rs.getString("doktor_soyad"));
-				obje4.setHasta_id(rs.getInt("hasta_id"));
-				obje4.setHastaAd(rs.getString("hasta_ad"));
-				obje4.setHastaSoyad(rs.getString("hasta_soyad"));
-				obje4.setTarih(rs.getString("tarih"));
-				liste2.add(obje4);
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return liste2;
-	}*/
+
 	public ArrayList<randevu> getHastaRanList(int hastaID) throws SQLException {
 		ArrayList<randevu> liste3 = new ArrayList<randevu>();
         randevu obje3;
@@ -92,7 +45,7 @@ public class randevu {
 			while(rs.next()) {
 				obje3 = new randevu();
 				obje3.setId(rs.getInt("id"));
-				obje3.setDoctor_id(rs.getInt("doctor_id"));
+				obje3.setDoctor_id(rs.getInt("doktor_id"));
 				obje3.setDoktorAd(rs.getString("doktor_ad"));
 				obje3.setDoktorSoyad(rs.getString("doktor_soyad"));
 				obje3.setHasta_id(rs.getInt("hasta_id"));
@@ -122,7 +75,7 @@ public class randevu {
 	        while (rs.next()) {
 	            obje3 = new randevu();
 	            obje3.setId(rs.getInt("id"));
-	            obje3.setDoctor_id(rs.getInt("doctor_id"));
+	            obje3.setDoctor_id(rs.getInt("doktor_id"));
 	            obje3.setDoktorAd(rs.getString("doktor_ad"));
 	            obje3.setDoktorSoyad(rs.getString("doktor_soyad"));
 	            obje3.setHasta_id(rs.getInt("hasta_id"));
@@ -139,6 +92,22 @@ public class randevu {
 	        if (con != null) con.close();
 	    }
 	    return liste3;
+	}
+	public void silRandevu(String name,String surname,String date) {
+		Connection con = conR.conDB();
+		try {
+			st = con.createStatement();
+			String query1 = "DELETE FROM randevu WHERE tarih='" + date + "'";
+			String query2 = "UPDATE calsaat SET status= 'A' WHERE doktor_ad='" + name + "' AND doktor_soyad='" + surname + "' AND workday='" + date + "'";
+			pst = con.prepareStatement(query1);
+			pst.executeUpdate();
+
+			pst = con.prepareStatement(query2);
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	public int getId() {
 		return id;

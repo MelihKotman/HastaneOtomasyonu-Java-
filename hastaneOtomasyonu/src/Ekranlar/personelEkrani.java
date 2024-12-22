@@ -131,6 +131,7 @@ public class personelEkrani extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton cikisbutonu = new JButton("Çıkış Yap");
+		cikisbutonu.setForeground(new Color(255, 255, 255));
 		cikisbutonu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				girisEkrani login = new girisEkrani();
@@ -140,16 +141,17 @@ public class personelEkrani extends JFrame {
 		});
 		cikisbutonu.setBorderPainted(false);
 		cikisbutonu.setBounds(686, 11, 138, 33);
-		cikisbutonu.setBackground(new Color(255, 0, 0));
-		cikisbutonu.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
+		cikisbutonu.setBackground(new Color(128, 128, 128));
+		cikisbutonu.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		contentPane.add(cikisbutonu);
 		
 		JLabel personeletiket = new JLabel("Hoş Geldiniz " + Personel.getAd() + "" + Personel.getSoyad());
-		personeletiket.setBounds(23, 11, 225, 39);
-		personeletiket.setFont(new Font("Verdana Pro Cond Semibold", Font.ITALIC, 13));
+		personeletiket.setBounds(23, 11, 255, 39);
+		personeletiket.setFont(new Font("Verdana Pro Cond Semibold", Font.ITALIC, 14));
 		contentPane.add(personeletiket);
 		
 		JTabbedPane anaPane = new JTabbedPane(JTabbedPane.TOP);
+		anaPane.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
 		anaPane.setBounds(22, 57, 802, 403);
 		contentPane.add(anaPane);
 		
@@ -158,7 +160,7 @@ public class personelEkrani extends JFrame {
 		anaPane.addTab("Yeni Doktor Ekle/Çıkar", null, doktoryonetim, null);
 		doktoryonetim.setLayout(null);
 		
-		JLabel yeniDokAd = new JLabel("Doktor Adı");
+		JLabel yeniDokAd = new JLabel("Doktor Adı :");
 		yeniDokAd.setFont(new Font("Verdana Pro Cond Semibold", Font.BOLD, 13));
 		yeniDokAd.setBounds(616, 11, 91, 27);
 		doktoryonetim.add(yeniDokAd);
@@ -169,7 +171,7 @@ public class personelEkrani extends JFrame {
 		doktoryonetim.add(textyeniDocAd);
 		textyeniDocAd.setColumns(10);
 		
-		JLabel yeniDokSoy = new JLabel("Doktor Soyadı");
+		JLabel yeniDokSoy = new JLabel("Doktor Soyadı :");
 		yeniDokSoy.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		yeniDokSoy.setBounds(616, 69, 91, 14);
 		doktoryonetim.add(yeniDokSoy);
@@ -180,7 +182,7 @@ public class personelEkrani extends JFrame {
 		doktoryonetim.add(textyeniDocSoy);
 		textyeniDocSoy.setColumns(10);
 		
-		JLabel yeniDokPass = new JLabel("Şifre");
+		JLabel yeniDokPass = new JLabel("Şifre :");
 		yeniDokPass.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		yeniDokPass.setBounds(616, 117, 46, 20);
 		doktoryonetim.add(yeniDokPass);
@@ -191,7 +193,7 @@ public class personelEkrani extends JFrame {
 		doktoryonetim.add(textyeniDocPass);
 		textyeniDocPass.setColumns(10);
 		
-		JLabel yeniDokTc = new JLabel("T.C. Kimlik Numarası");
+		JLabel yeniDokTc = new JLabel("T.C. Kimlik Numarası :");
 		yeniDokTc.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		yeniDokTc.setBounds(616, 173, 146, 14);
 		doktoryonetim.add(yeniDokTc);
@@ -202,7 +204,11 @@ public class personelEkrani extends JFrame {
 		doktoryonetim.add(textyeniDocTc);
 		textyeniDocTc.setColumns(10);
 		
+
+		
 		JButton KaydetButton = new JButton("Kaydet");
+		KaydetButton.setForeground(new Color(45, 75, 86));
+		KaydetButton.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		KaydetButton.setBorderPainted(false);
 		KaydetButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -218,6 +224,7 @@ public class personelEkrani extends JFrame {
 						textyeniDocTc.setText(null);
 						textyeniDocPass.setText(null);
 						guncelDoktorListe();
+
 					}
 					}catch(SQLException e1) {
 						e1.printStackTrace();
@@ -225,11 +232,11 @@ public class personelEkrani extends JFrame {
 				}
 			}
 		});
-		KaydetButton.setBackground(new Color(1, 254, 172));
+		KaydetButton.setBackground(new Color(122, 205, 203));
 		KaydetButton.setBounds(616, 229, 146, 23);
 		doktoryonetim.add(KaydetButton);
 		
-		JLabel DokSilID = new JLabel("Kullanıcı ID Numarası");
+		JLabel DokSilID = new JLabel("Kullanıcı ID Numarası :");
 		DokSilID.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		DokSilID.setBounds(616, 263, 146, 14);
 		doktoryonetim.add(DokSilID);
@@ -241,6 +248,8 @@ public class personelEkrani extends JFrame {
 		textyeniDocID.setColumns(10);
 		
 		JButton SilButton = new JButton("Sil");
+		SilButton.setForeground(new Color(255, 255, 255));
+		SilButton.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		SilButton.setBorderPainted(false);
 		SilButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -263,7 +272,7 @@ public class personelEkrani extends JFrame {
 				}
 			}
 		});
-		SilButton.setBackground(new Color(255, 0, 0));
+		SilButton.setBackground(new Color(0, 64, 64));
 		SilButton.setBounds(614, 319, 148, 23);
 		doktoryonetim.add(SilButton);
 		
@@ -313,7 +322,7 @@ public class personelEkrani extends JFrame {
 			}
 		});
 		Doktorlistesi.setBackground(new Color(255, 255, 255));
-		Doktorlistesi.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
+		Doktorlistesi.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		scrollPane_liste.setViewportView(Doktorlistesi);
 		
 		JPanel poliyonetim = new JPanel();
@@ -388,10 +397,12 @@ public class personelEkrani extends JFrame {
 				poliklinikListesi.setRowSelectionInterval(secilisira, secilisira);
 			}
 		});	
-		poliklinikListesi.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
+		poliklinikListesi.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		poliklinik_pane.setViewportView(poliklinikListesi);
 		
 		JButton ButonClinic = new JButton("Kaydet");
+		ButonClinic.setForeground(new Color(45, 75, 86));
+		ButonClinic.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		ButonClinic.setBorderPainted(false);
 		ButonClinic.setBounds(21, 64, 146, 23);
 		panel.add(ButonClinic);
@@ -413,25 +424,29 @@ public class personelEkrani extends JFrame {
 				}
 			}
 		});
-		ButonClinic.setBackground(new Color(7, 164, 248));
 		
-		JComboBox secDoktor = new JComboBox();
+		JComboBox secComboBox = new JComboBox();
+		secComboBox.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		for (int i = 0; i < Personel.getDoctorList().size(); i++) {
 			personel p = new personel();
-			secDoktor.addItem(new Item(p.getDoctorList().get(i).getId(),p.getDoctorList().get(i).getAd()));
+			secComboBox.addItem(new Item(p.getDoctorList().get(i).getId(),p.getDoctorList().get(i).getAd()));
 		}
-		secDoktor.setBounds(21, 151, 146, 23);
-		panel.add(secDoktor);
+		secComboBox.setBounds(21, 152, 146, 22);
+		panel.add(secComboBox);
 		
+		
+		ButonClinic.setBackground(new Color(122, 205, 203));
 		JButton ButonWorker = new JButton("Ekle");
+		ButonWorker.setForeground(new Color(45, 75, 86));
+		ButonWorker.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		ButonWorker.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int selRow = poliklinikListesi.getSelectedRow();
-					int selDoc = ((Item)secDoktor.getSelectedItem()).getKey();
+					int selDoc = ((Item)secComboBox.getSelectedItem()).getKey();
 					if(selRow >= 0) {
 						String selClinic = poliklinikListesi.getModel().getValueAt(selRow, 0).toString();
 						int selClinicID = Integer.parseInt(selClinic);
-						Item itemDoc = (Item)secDoktor.getSelectedItem();
+						Item itemDoc = (Item)secComboBox.getSelectedItem();
 						boolean controlet4 = Personel.ekleCalisan(itemDoc.getKey(),selClinicID);
 						try {
 							if(controlet4){
@@ -461,11 +476,13 @@ public class personelEkrani extends JFrame {
 					}
 				});
 		ButonWorker.setBorderPainted(false);
-		ButonWorker.setBackground(new Color(7, 164, 248));
+		ButonWorker.setBackground(new Color(122, 205, 203));
 		ButonWorker.setBounds(21, 185, 146, 23);
 		panel.add(ButonWorker);
 		
 		JButton butonSecCLi = new JButton("Seç");
+		butonSecCLi.setForeground(new Color(45, 75, 86));
+		butonSecCLi.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		butonSecCLi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selRow = poliklinikListesi.getSelectedRow();
@@ -494,7 +511,7 @@ public class personelEkrani extends JFrame {
 			}
 	});
 		butonSecCLi.setBorderPainted(false);
-		butonSecCLi.setBackground(new Color(7, 164, 248));
+		butonSecCLi.setBackground(new Color(122, 205, 203));
 		butonSecCLi.setBounds(21, 297, 146, 23);
 		panel.add(butonSecCLi);
 		
@@ -508,11 +525,13 @@ public class personelEkrani extends JFrame {
 		lblDoktorAd.setBounds(52, 123, 80, 17);
 		panel.add(lblDoktorAd);
 		
+
 		JScrollPane calisan_pane = new JScrollPane();
 		calisan_pane.setBounds(327, 11, 260, 353);
 		poliyonetim.add(calisan_pane);
 		
 		table_calisan = new JTable();
+		table_calisan.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		calisan_pane.setViewportView(table_calisan);
 		}
 		

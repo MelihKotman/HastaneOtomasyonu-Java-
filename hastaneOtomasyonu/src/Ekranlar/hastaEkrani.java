@@ -95,18 +95,20 @@ public class hastaEkrani extends JFrame {
 		saatData = new Object[2];
 		
         randevuModel = new DefaultTableModel();
-        Object[] colRan = new Object[3];
+        Object[] colRan = new Object[4];
         colRan[0] = "ID";
-        colRan[1] = "Doktor";
-        colRan[2] = "Tarih";
+        colRan[1] = "Doktor Ad";
+        colRan[2] = "Doktor Soyad";
+        colRan[3] = "Tarih";
         randevuModel.setColumnIdentifiers(colRan);
-        randevuData = new Object[3];
+        randevuData = new Object[4];
         List<randevu> randevuList = Randevu.getHastaRanList(Hasta.getId());
         for (int i = 0; i < randevuList.size(); i++) {
             Object[] randevuData = new Object[3];
             randevuData[0] = randevuList.get(i).getId();
-            randevuData[1] = randevuList.get(i).getDoktorAd() + " " + randevuList.get(i).getDoktorSoyad();
-            randevuData[2] = randevuList.get(i).getTarih();
+            randevuData[1] = randevuList.get(i).getDoktorAd();
+            randevuData[2] = randevuList.get(i).getDoktorSoyad();
+            randevuData[3] = randevuList.get(i).getTarih();
             randevuModel.addRow(randevuData);
         }
 
@@ -122,13 +124,15 @@ public class hastaEkrani extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Hoşgeldiniz, Sayın "+Hasta.getAd() + " " + Hasta.getSoyad());
+		lblNewLabel.setForeground(new Color(45, 75, 86));
 		lblNewLabel.setBackground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 14));
+		lblNewLabel.setFont(new Font("Verdana Pro Cond Semibold", Font.ITALIC, 14));
 		lblNewLabel.setBounds(21, 434, 295, 21);
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Çıkış Yap");
-		btnNewButton.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
+		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				girisEkrani login = new girisEkrani();
@@ -137,12 +141,12 @@ public class hastaEkrani extends JFrame {
 			}
 		});
 		btnNewButton.setBorderPainted(false);
-		btnNewButton.setBackground(new Color(255, 0, 0));
+		btnNewButton.setBackground(new Color(128, 128, 128));
 		btnNewButton.setBounds(557, 428, 109, 37);
 		contentPane.add(btnNewButton);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
+		tabbedPane.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
 		tabbedPane.setBounds(21, 11, 632, 406);
 		contentPane.add(tabbedPane);
 		
@@ -156,9 +160,11 @@ public class hastaEkrani extends JFrame {
 		getApoint_pane.add(scrollDocPane);
 		
 		tableDocAd = new JTable(doctorModel);
+		tableDocAd.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		scrollDocPane.setViewportView(tableDocAd);
 		
 		JLabel lblNewLabel_1 = new JLabel("Doktor Listesi");
+		lblNewLabel_1.setForeground(new Color(45, 75, 86));
 		lblNewLabel_1.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		lblNewLabel_1.setBounds(10, 11, 91, 16);
 		getApoint_pane.add(lblNewLabel_1);
@@ -168,16 +174,19 @@ public class hastaEkrani extends JFrame {
 		getApoint_pane.add(scrollSaatPane);
 		
 		tableDocSaat = new JTable(saatModel);
+		tableDocSaat.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		tableDocSaat.getColumnModel().getColumn(0).setPreferredWidth(5);
 		scrollSaatPane.setViewportView(tableDocSaat);
 		
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Saat Listesi");
+		lblNewLabel_1_1.setForeground(new Color(45, 75, 86));
 		lblNewLabel_1_1.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		lblNewLabel_1_1.setBounds(257, 11, 118, 16);
 		getApoint_pane.add(lblNewLabel_1_1);
 		
 		JComboBox comboPoliBox = new JComboBox();
+		comboPoliBox.setForeground(new Color(45, 75, 86));
 		comboPoliBox.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		comboPoliBox.addItem("Poliklinik Seçiniz");
 		for (int i = 0; i < Poliklinik.getPoliList().size(); i++) {
@@ -213,16 +222,20 @@ public class hastaEkrani extends JFrame {
 		getApoint_pane.add(comboPoliBox);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Poliklinik Adı:");
+		lblNewLabel_1_1_1.setForeground(new Color(45, 75, 86));
 		lblNewLabel_1_1_1.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		lblNewLabel_1_1_1.setBounds(499, 26, 118, 16);
 		getApoint_pane.add(lblNewLabel_1_1_1);
 		
 		JLabel lblNewLabel_1_1_1_1 = new JLabel("Doktor Seç:");
+		lblNewLabel_1_1_1_1.setForeground(new Color(45, 75, 86));
 		lblNewLabel_1_1_1_1.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		lblNewLabel_1_1_1_1.setBounds(499, 153, 118, 16);
 		getApoint_pane.add(lblNewLabel_1_1_1_1);
 		
 		JButton ButonSelDoc = new JButton("Seç");
+		ButonSelDoc.setForeground(new Color(45, 75, 86));
+		ButonSelDoc.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		ButonSelDoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = tableDocAd.getSelectedRow();
@@ -253,16 +266,19 @@ public class hastaEkrani extends JFrame {
 		}
 		});
 		ButonSelDoc.setBorderPainted(false);
-		ButonSelDoc.setBackground(new Color(7, 164, 248));
+		ButonSelDoc.setBackground(new Color(122, 205, 203));
 		ButonSelDoc.setBounds(499, 180, 118, 23);
 		getApoint_pane.add(ButonSelDoc);
 		
 		JLabel lblNewLabel_1_1_1_1_1 = new JLabel("Randevu Al:");
+		lblNewLabel_1_1_1_1_1.setForeground(new Color(45, 75, 86));
 		lblNewLabel_1_1_1_1_1.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		lblNewLabel_1_1_1_1_1.setBounds(499, 295, 118, 16);
 		getApoint_pane.add(lblNewLabel_1_1_1_1_1);
 		
 		JButton ButonAlRan = new JButton("Al");
+		ButonAlRan.setForeground(new Color(45, 75, 86));
+		ButonAlRan.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		ButonAlRan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selRow = tableDocSaat.getSelectedRow();
@@ -292,7 +308,7 @@ public class hastaEkrani extends JFrame {
 			}
 		});
 		ButonAlRan.setBorderPainted(false);
-		ButonAlRan.setBackground(new Color(7, 164, 248));
+		ButonAlRan.setBackground(new Color(122, 205, 203));
 		ButonAlRan.setBounds(499, 321, 118, 23);
 		getApoint_pane.add(ButonAlRan);
 
@@ -306,14 +322,33 @@ public class hastaEkrani extends JFrame {
 		myApoint_pane.add(RandevuMenu);
 		
 		table_ran = new JTable(randevuModel);
-		table_ran.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
+		table_ran.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		RandevuMenu.setViewportView(table_ran);
 		
-		JButton btnSilRan = new JButton("Sil");
+		JButton btnSilRan = new JButton("Randevu İptal Et");
+		btnSilRan.setForeground(new Color(255, 255, 255));
+		btnSilRan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String selDate = (String) table_ran.getValueAt(table_ran.getSelectedRow(), 3);
+					String seldocsurName = (String) table_ran.getValueAt(table_ran.getSelectedRow(), 2);
+					String seldocName = (String) table_ran.getValueAt(table_ran.getSelectedRow(), 1);
+					Randevu.silRandevu(seldocName,seldocsurName,selDate);
+					guncelRanModel(Hasta.getId());
+					guncelSaatModel(selectDoctorID);
+					YardimMesaji.gosterMesaj("Randevu başarıyla silindi.");
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+
+			
+		});
 		btnSilRan.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		btnSilRan.setBorderPainted(false);
-		btnSilRan.setBackground(new Color(10, 139, 245));
-		btnSilRan.setBounds(494, 15, 123, 28);
+		btnSilRan.setBackground(new Color(0, 64, 64));
+		btnSilRan.setBounds(466, 15, 151, 28);
 		myApoint_pane.add(btnSilRan);
 	}
 	public void guncelSaatModel(int doctor_id) throws SQLException {
@@ -330,10 +365,11 @@ public class hastaEkrani extends JFrame {
 		clearModel.setRowCount(0);
 		try{
 			for (int i = 0; i < Randevu.getHastaRanList(hasta_id).size(); i++) {
-			Object[] randevuData = new Object[3];
+			Object[] randevuData = new Object[4];
 			randevuData[0] = Randevu.getHastaRanList(hasta_id).get(i).getId();
-			randevuData[1] = Randevu.getHastaRanList(hasta_id).get(i).getDoktorAd() + " " + Randevu.getHastaRanList(hasta_id).get(i).getDoktorSoyad();
-			randevuData[2] = Randevu.getHastaRanList(hasta_id).get(i).getTarih();
+			randevuData[1] = Randevu.getHastaRanList(hasta_id).get(i).getDoktorAd();
+			randevuData[2] = Randevu.getHastaRanList(hasta_id).get(i).getDoktorSoyad();
+			randevuData[3] = Randevu.getHastaRanList(hasta_id).get(i).getTarih();
 			randevuModel.addRow(randevuData);
 		}
 	} catch (SQLException e) {

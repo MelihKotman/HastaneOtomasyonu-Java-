@@ -109,12 +109,14 @@ public class doktorEkrani extends JFrame {
 		doctorPane.setLayout(null);
 		
 		JLabel personeletiket = new JLabel("Hoş Geldiniz " + Doktor.getAd() + " " + Doktor.getSoyad());
+		personeletiket.setForeground(new Color(45, 75, 86));
 		personeletiket.setBounds(23, 11, 227, 33);
-		personeletiket.setFont(new Font("Verdana Pro Cond Semibold", Font.ITALIC, 13));
+		personeletiket.setFont(new Font("Verdana Pro Cond Semibold", Font.ITALIC, 14));
 		doctorPane.add(personeletiket);
 		
 		JButton cikisbutonu = new JButton("Çıkış Yap");
-		cikisbutonu.setBounds(671, 12, 138, 33);
+		cikisbutonu.setForeground(new Color(255, 255, 255));
+		cikisbutonu.setBounds(688, 12, 138, 33);
 		cikisbutonu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				girisEkrani login = new girisEkrani();
@@ -122,13 +124,14 @@ public class doktorEkrani extends JFrame {
 				dispose();
 			}
 		});
-		cikisbutonu.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
+		cikisbutonu.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		cikisbutonu.setBorderPainted(false);
-		cikisbutonu.setBackground(Color.RED);
+		cikisbutonu.setBackground(new Color(128, 128, 128));
 		doctorPane.add(cikisbutonu);
 		
 		JTabbedPane anaPane = new JTabbedPane(JTabbedPane.TOP);
-		anaPane.setBounds(10, 63, 802, 403);
+		anaPane.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
+		anaPane.setBounds(10, 63, 829, 403);
 		doctorPane.add(anaPane);
 		
 		JPanel WorHour = new JPanel();
@@ -136,18 +139,21 @@ public class doktorEkrani extends JFrame {
 		WorHour.setLayout(null);
 		
 		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setForeground(new Color(45, 75, 86));
 		dateChooser.setBackground(new Color(255, 255, 255));
 		dateChooser.getCalendarButton().setBackground(new Color(255, 255, 255));
 		dateChooser.setBounds(10, 11, 129, 28);
 		WorHour.add(dateChooser);
 		
 		JComboBox zamSec = new JComboBox();
-		zamSec.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
+		zamSec.setForeground(new Color(45, 75, 86));
+		zamSec.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		zamSec.setModel(new DefaultComboBoxModel(new String[] {"9.30", "10.00", "10.30", "11.00", "11.30", "12.00", "12.30", "13.30", "14.00", "14.30", "15.00", "15.30", "16.00", "16.30", "17.00"}));
 		zamSec.setBounds(149, 11, 112, 28);
 		WorHour.add(zamSec);
 		
-		JButton saatEkle = new JButton("Ekle");
+		JButton saatEkle = new JButton("Saat Ekle");
+		saatEkle.setForeground(new Color(45, 75, 86));
 		saatEkle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -180,21 +186,23 @@ public class doktorEkrani extends JFrame {
 			}
 		});
 		saatEkle.setBorderPainted(false);
-		saatEkle.setBackground(new Color(0, 255, 64));
+		saatEkle.setBackground(new Color(122, 205, 203));
 		saatEkle.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		saatEkle.setBounds(271, 11, 123, 28);
 		WorHour.add(saatEkle);
 		
 		JScrollPane w_scrollPane = new JScrollPane();
-		w_scrollPane.setBounds(10, 51, 777, 313);
+		w_scrollPane.setBounds(10, 51, 804, 313);
 		WorHour.add(w_scrollPane);
 		
 		table_calsaat = new JTable(calModel);
+		table_calsaat.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		w_scrollPane.setViewportView(table_calsaat);
 		
 
 		
-		JButton btnSil = new JButton("Sil");
+		JButton btnSil = new JButton("Saat Sil");
+		btnSil.setForeground(new Color(255, 255, 255));
 		btnSil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = table_calsaat.getSelectedRow();
@@ -220,26 +228,45 @@ public class doktorEkrani extends JFrame {
 		});
 		btnSil.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		btnSil.setBorderPainted(false);
-		btnSil.setBackground(new Color(10, 139, 245));
-		btnSil.setBounds(664, 11, 123, 28);
+		btnSil.setBackground(new Color(0, 64, 64));
+		btnSil.setBounds(691, 11, 123, 28);
 		WorHour.add(btnSil);
 		
 		JPanel RandevuPan = new JPanel();
-		anaPane.addTab("New tab", null, RandevuPan, null);
+		anaPane.addTab("Randevularım", null, RandevuPan, null);
 		RandevuPan.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 50, 777, 314);
+		scrollPane.setBounds(10, 50, 804, 314);
 		RandevuPan.add(scrollPane);
 		
 		Randevu_table = new JTable(ranModel);
+		Randevu_table.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		scrollPane.setViewportView(Randevu_table);
 		
-		JButton btnSilRan = new JButton("Sil");
+		JButton btnSilRan = new JButton("Randevu İptal Et");
+		btnSilRan.setForeground(new Color(255, 255, 255));
+		btnSilRan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String selDate = (String) Randevu_table.getValueAt(Randevu_table.getSelectedRow(), 3);
+					String seldocsurName = Doktor.getSoyad();
+					String seldocName = Doktor.getAd();
+					Ran.silRandevu(seldocName,seldocsurName,selDate);
+					guncelRandevu(Doktor);
+					guncelSaat(Doktor);
+					YardimMesaji.gosterMesaj("Randevu başarıyla iptal edildi.");
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+
+		});
 		btnSilRan.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		btnSilRan.setBorderPainted(false);
-		btnSilRan.setBackground(new Color(10, 139, 245));
-		btnSilRan.setBounds(664, 11, 123, 28);
+		btnSilRan.setBackground(new Color(0, 64, 64));
+		btnSilRan.setBounds(671, 11, 143, 28);
 		RandevuPan.add(btnSilRan);
 	}	
 		public void guncelSaat(doktor Doktor)throws SQLException{
@@ -251,4 +278,16 @@ public class doktorEkrani extends JFrame {
 				calModel.addRow(calData);
 			}
 	}
-}
+
+	public void guncelRandevu(doktor Doktor)throws SQLException{
+            DefaultTableModel temizleModel = (DefaultTableModel) Randevu_table.getModel();
+            temizleModel.setRowCount(0);
+            for (int i = 0; i < Ran.getDocRanList(Doktor.getId()).size(); i++) {
+                ranData[0] = Ran.getDocRanList(Doktor.getId()).get(i).getId();
+                ranData[1] = Ran.getDocRanList(Doktor.getId()).get(i).getHastaAd();
+                ranData[2] = Ran.getDocRanList(Doktor.getId()).get(i).getHastaSoyad();
+                ranData[3] = Ran.getDocRanList(Doktor.getId()).get(i).getTarih();
+                ranModel.addRow(ranData);
+            }
+		}
+	}

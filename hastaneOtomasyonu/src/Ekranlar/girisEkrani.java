@@ -72,16 +72,13 @@ public class girisEkrani extends JFrame {
 		setContentPane(w_pane);
 		w_pane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("e-Hastane Uygulaması");
-		lblNewLabel.setFont(new Font("Verdana Pro Cond Semibold", Font.BOLD, 15));
-		lblNewLabel.setBounds(250, 22, 161, 40);
-		w_pane.add(lblNewLabel);
-		
-		JLabel logo = new JLabel(new ImageIcon(getClass().getResource("/logolar/hastane5.png")));
-		logo.setBounds(10, 0, 230, 148);
+		JLabel logo = new JLabel(new ImageIcon(getClass().getResource("/logolar/e-Hastane.png")));
+		logo.setBounds(63, 11, 367, 163);
 		w_pane.add(logo);
 		
 		JTabbedPane w_Pane = new JTabbedPane(JTabbedPane.TOP);
+		w_Pane.setForeground(new Color(44, 75, 86));
+		w_Pane.setBackground(new Color(255, 255, 255));
 		w_Pane.setFont(new Font("Verdana", Font.BOLD, 11));
 		w_Pane.setBorder(null);
 		w_Pane.setBounds(42, 185, 407, 233);
@@ -93,22 +90,26 @@ public class girisEkrani extends JFrame {
 		girishasta_panel.setLayout(null);
 		
 		JLabel tc_kimlik_hasta = new JLabel("T.C. Kimlik Numarası :");
+		tc_kimlik_hasta.setForeground(new Color(44, 75, 86));
 		tc_kimlik_hasta.setFont(new Font("Verdana Pro Cond Semibold", Font.BOLD, 14));
 		tc_kimlik_hasta.setBounds(10, 36, 146, 27);
 		girishasta_panel.add(tc_kimlik_hasta);
 		
 		textTCHasta = new JTextField();
 		textTCHasta.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 14));
-		textTCHasta.setBounds(166, 36, 146, 27);
+		textTCHasta.setBounds(166, 36, 180, 27);
 		girishasta_panel.add(textTCHasta);
 		textTCHasta.setColumns(10);
 		
 		JLabel sifre_hasta = new JLabel("Şifre :");
+		sifre_hasta.setForeground(new Color(44, 75, 86));
 		sifre_hasta.setFont(new Font("Verdana Pro Cond Semibold", Font.BOLD, 14));
 		sifre_hasta.setBounds(10, 105, 146, 27);
 		girishasta_panel.add(sifre_hasta);
 		
 		JButton girisButon = new JButton("Giriş Yap");
+		girisButon.setForeground(new Color(255, 255, 255));
+		girisButon.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		girisButon.setBorderPainted(false);
 		girisButon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -148,14 +149,16 @@ public class girisEkrani extends JFrame {
 				}
 			}
 		});
-		girisButon.setBackground(new Color(255, 111, 111));
+		girisButon.setBackground(new Color(45, 75, 86));
 		girisButon.setBounds(40, 150, 116, 44);
 		girishasta_panel.add(girisButon);
 		
 		
 		JButton KaydolButton = new JButton("Kayıt Ol");
+		KaydolButton.setForeground(new Color(44, 75, 86));
+		KaydolButton.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		KaydolButton.setBorderPainted(false);
-		KaydolButton.setBackground(new Color(81, 255, 190));
+		KaydolButton.setBackground(new Color(122, 205, 203));
 		KaydolButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				kayitEkrani kGUI = new kayitEkrani();
@@ -167,7 +170,7 @@ public class girisEkrani extends JFrame {
 		girishasta_panel.add(KaydolButton);
 		
 		passHasta = new JPasswordField();
-		passHasta.setBounds(166, 105, 146, 27);
+		passHasta.setBounds(166, 105, 180, 27);
 		girishasta_panel.add(passHasta);
 		
 		JPanel girisdoktor_panel = new JPanel();
@@ -176,6 +179,8 @@ public class girisEkrani extends JFrame {
 		girisdoktor_panel.setLayout(null);
 		
 		JButton girisButonDoktor = new JButton("Giriş Yap");
+		girisButonDoktor.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
+		girisButonDoktor.setForeground(new Color(255, 255, 255));
 		girisButonDoktor.setBorderPainted(false);
 		girisButonDoktor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -228,13 +233,14 @@ public class girisEkrani extends JFrame {
 				}
 			}
 		});
-		girisButonDoktor.setBackground(new Color(255, 111, 111));
-		girisButonDoktor.setBounds(63, 150, 284, 44);
+		girisButonDoktor.setBackground(new Color(44, 75, 86));
+		girisButonDoktor.setBounds(41, 150, 306, 44);
 		girisdoktor_panel.add(girisButonDoktor);
 		
 		
 		
 		JLabel tc_kimlik_doktor = new JLabel("T.C. Kimlik Numarası :");
+		tc_kimlik_doktor.setForeground(new Color(44, 75, 86));
 		tc_kimlik_doktor.setFont(new Font("Verdana Pro Cond Semibold", Font.BOLD, 14));
 		tc_kimlik_doktor.setBounds(10, 37, 146, 27);
 		girisdoktor_panel.add(tc_kimlik_doktor);
@@ -242,21 +248,17 @@ public class girisEkrani extends JFrame {
 		tcDoktor = new JTextField();
 		tcDoktor.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 14));
 		tcDoktor.setColumns(10);
-		tcDoktor.setBounds(166, 37, 146, 27);
+		tcDoktor.setBounds(166, 37, 181, 27);
 		girisdoktor_panel.add(tcDoktor);
 		
 		JLabel sifre_doktor = new JLabel("Şifre :");
+		sifre_doktor.setForeground(new Color(44, 75, 86));
 		sifre_doktor.setFont(new Font("Verdana Pro Cond Semibold", Font.BOLD, 14));
 		sifre_doktor.setBounds(10, 106, 146, 27);
 		girisdoktor_panel.add(sifre_doktor);
 		
 		passDoktor = new JPasswordField();
-		passDoktor.setBounds(166, 106, 146, 27);
+		passDoktor.setBounds(166, 106, 181, 27);
 		girisdoktor_panel.add(passDoktor);
-		
-		JLabel hosgeldinizyazisi = new JLabel("Hoş geldiniz");
-		hosgeldinizyazisi.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
-		hosgeldinizyazisi.setBounds(42, 148, 118, 26);
-		w_pane.add(hosgeldinizyazisi);
 	}
 }

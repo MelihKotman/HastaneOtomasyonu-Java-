@@ -42,26 +42,32 @@ public class DegistirKlinikMenu extends JFrame {
 	}
 
 	public DegistirKlinikMenu(poliklinik Clinic) {
+		setTitle("Poliklinik Değiştir");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 224, 129);
+		setBounds(100, 100, 224, 139);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Poliklinik Adı :");
+		lblNewLabel.setBackground(new Color(44, 75, 86));
 		lblNewLabel.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		lblNewLabel.setBounds(61, 11, 84, 14);
 		contentPane.add(lblNewLabel);
 		
 		textDegistir = new JTextField();
+		textDegistir.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 12));
 		textDegistir.setBounds(10, 36, 189, 20);
 		contentPane.add(textDegistir);
 		textDegistir.setText(Clinic.getKlinik_ad());
 		textDegistir.setColumns(10);
 		
 		JButton butonDegistir = new JButton("Değiştir");
+		butonDegistir.setForeground(new Color(44, 75, 86));
+		butonDegistir.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 13));
 		butonDegistir.setBorderPainted(false);
 		butonDegistir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -74,7 +80,7 @@ public class DegistirKlinikMenu extends JFrame {
 				}
 			}
 		});
-		butonDegistir.setBackground(new Color(44, 175, 239));
+		butonDegistir.setBackground(new Color(122, 205, 203));
 		butonDegistir.setBounds(61, 67, 89, 23);
 		contentPane.add(butonDegistir);
 	}
