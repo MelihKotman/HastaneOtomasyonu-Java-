@@ -264,6 +264,7 @@ public class personelEkrani extends JFrame {
 					YardimMesaji.gosterMesaj("Basarili");
 					textyeniDocID.setText(null);
 					guncelDoktorListe();
+
 				}
 			}
 			catch(SQLException e1){
@@ -433,6 +434,9 @@ public class personelEkrani extends JFrame {
 		}
 		secComboBox.setBounds(21, 152, 146, 22);
 		panel.add(secComboBox);
+
+
+
 		
 		
 		ButonClinic.setBackground(new Color(122, 205, 203));
@@ -533,8 +537,9 @@ public class personelEkrani extends JFrame {
 		table_calisan = new JTable();
 		table_calisan.setFont(new Font("Verdana Pro Cond Semibold", Font.PLAIN, 11));
 		calisan_pane.setViewportView(table_calisan);
-		}
 		
+		}
+
 	public void guncelDoktorListe() throws SQLException {
 		DefaultTableModel temizleModel= (DefaultTableModel) Doktorlistesi.getModel();
 		temizleModel.setRowCount(0);
@@ -557,5 +562,6 @@ public class personelEkrani extends JFrame {
 		}
 		
 	}
+
 }
 
