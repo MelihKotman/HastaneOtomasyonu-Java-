@@ -40,6 +40,8 @@ public class girisEkrani extends JFrame {
 	private JPasswordField passDoktor;
 	private DbConnection conH = new DbConnection();
 	
+
+	
 	/**
 	 * Launch the application.
 	 */
@@ -68,6 +70,7 @@ public class girisEkrani extends JFrame {
 		w_pane = new JPanel();
 		w_pane.setBackground(new Color(255, 255, 255));
 		w_pane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
 
 		setContentPane(w_pane);
 		w_pane.setLayout(null);
