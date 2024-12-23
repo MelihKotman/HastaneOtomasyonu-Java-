@@ -206,13 +206,12 @@ public class doktorEkrani extends JFrame {
 		btnSil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = table_calsaat.getSelectedRow();
-				if (selectedRow > 0) {
-					YardimMesaji.gosterMesaj("Lütfen bir tarih seçiniz");
-				} else {
+				if (selectedRow >= 0) {
 					String seciliRow =  table_calsaat.getModel().getValueAt(selectedRow, 0).toString();
 					int selID = Integer.parseInt(seciliRow);
-					try{
-						boolean controlet6 = Doktor.cikarSaat(selID);
+					boolean controlet6;
+				 try{
+						controlet6 = Doktor.cikarSaat(selID);
 						if (controlet6) {
 							YardimMesaji.gosterMesaj("Basarili");
 							guncelSaat(Doktor);
@@ -222,7 +221,9 @@ public class doktorEkrani extends JFrame {
 					}catch (Exception e1) {
 						e1.printStackTrace();
 					}
-					
+				}
+				else {
+					YardimMesaji.gosterMesaj("Lütfen bir tarih seçiniz.");
 				}
 			}
 		});

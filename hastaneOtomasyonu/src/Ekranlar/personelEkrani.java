@@ -364,7 +364,7 @@ public class personelEkrani extends JFrame {
 				degistir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				degistir.setVisible(true);
 				degistir.addWindowListener(new WindowAdapter(){
-					public void WindowClosed(WindowEvent e) {
+					public void windowClosed(WindowEvent e) {
 					try {
 						guncelKlinikListe();
 					}

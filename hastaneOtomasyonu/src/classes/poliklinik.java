@@ -89,7 +89,7 @@ public class poliklinik {
 		try {
 			pst = con.prepareStatement(query);
 			pst.setString(1,klinik_ad);
-			pst.setInt(2, id_klinik);
+			pst.setInt(2,id_klinik);
 			pst.executeUpdate();
 			gerceklestiMi = true;
 			
